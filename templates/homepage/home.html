@@ -1,0 +1,45 @@
+ {% extends  'components/base.html' %}
+
+ {%block content%}
+
+ <div id="bets" class="row border">
+
+ </div>
+
+ <script>
+
+    function renderBtn(){
+        return "<div class='col-xs-3'><button class='btn btn-primary btn-block'+''>Upvote</button></div>"
+    }
+
+    function renderData(single_bet){
+        return "<div class='mb-4 col-12 border py-3 mb-4 py-5'><h2>"
+             +single_bet.Title+
+             "</h2>"+renderBtn()+"</div>"
+    }
+
+    const xhr = new XMLHttpRequest()
+    const method = "GET"
+    const URL = "bets/"
+    const responseType = "json"
+    xhr.responseType = responseType
+    xhr.open(method,URL)
+    xhr.onload = () =>{
+        if(xhr.readyState == 4){
+            console.log(xhr.response.response)
+            var data = xhr.response.response
+            var res=""
+            for(let i=0;i<data.length;i++){
+              res+=renderData(data[i])
+            }
+            var everything = document.getElementById("bets")
+            everything.innerHTML = res
+        }
+    }
+  
+    xhr.send()
+
+ </script>
+
+ {%endblock content%}
+
